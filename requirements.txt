@@ -1,0 +1,5 @@
+tensorflow~=2.12.0
+opencv-python
+mediapipe==0.10.1
+sklearn
+matplotlib
