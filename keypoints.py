@@ -25,11 +25,11 @@ def draw_Landmarks(image, results):
 def draw_styled_landmarks(image, results):
     mp_drawing.draw_landmarks(image, results.left_hand_landmarks, mp_holistic.HAND_CONNECTIONS,
                               mp_drawing.DrawingSpec(color=(80,155,10), thickness = 1, circle_radius=1),
-                              mp_drawing.DrawingSpec(color=(155,80,10), thickness = 2, circle_radius=2)
+                              mp_drawing.DrawingSpec(color=(155,80,10), thickness = 4, circle_radius=4)
                               )    
     mp_drawing.draw_landmarks(image, results.right_hand_landmarks, mp_holistic.HAND_CONNECTIONS,
                               mp_drawing.DrawingSpec(color=(80,155,10), thickness = 1, circle_radius=1),
-                              mp_drawing.DrawingSpec(color=(155,80,10), thickness = 5, circle_radius=5)
+                              mp_drawing.DrawingSpec(color=(155,80,10), thickness = 4, circle_radius=4)
                               )    
 
 
@@ -53,4 +53,14 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
 
 draw_Landmarks(frame, results)
 
-plt.imshow(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+#plt.imshow(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+
+
+lh = np.array([[res.x, res.y, res.z] for res in results.left_hand_landmarks.landmark]).flatten if results.left_hand_landmarks else np.zeros(21*3)
+rh = np.array([[res.x, res.y, res.z] for res in results.right_hand_landmarks.landmark]).flatten if results.right_hand_landmarks else np.zeros(21*3)
+
+def extract_keypoints(results):
+    lh = np.array([[res.x, res.y, res.z] for res in results.left_hand_landmarks.landmark]).flatten if results.left_hand_landmarks else np.zeros(21*3)
+    rh = np.array([[res.x, res.y, res.z] for res in results.right_hand_landmarks.landmark]).flatten if results.right_hand_landmarks else np.zeros(21*3)
+    return np.concatenate([lh, rh])
+
