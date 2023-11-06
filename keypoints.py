@@ -64,3 +64,9 @@ def extract_keypoints(results):
     rh = np.array([[res.x, res.y, res.z] for res in results.right_hand_landmarks.landmark]).flatten if results.right_hand_landmarks else np.zeros(21*3)
     return np.concatenate([lh, rh])
 
+
+DATA_PATH = os.path.join('MP_Data') # path for exported data, numpy arrays
+actions = np.array(['hello', 'thanks', 'iloveyou']) # actions to detect
+no_sequences = 40 # numbers of videos in data
+sequence_lenght = 40 # frames in lenght video
+
