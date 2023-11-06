@@ -22,6 +22,18 @@ def draw_Landmarks(image, results):
     mp_drawing.draw_landmarks(image, results.left_hand_landmarks, mp_holistic.HAND_CONNECTIONS)
     mp_drawing.draw_landmarks(image, results.right_hand_landmarks, mp_holistic.HAND_CONNECTIONS)
 
+def draw_styled_landmarks(image, results):
+    mp_drawing.draw_landmarks(image, results.left_hand_landmarks, mp_holistic.HAND_CONNECTIONS,
+                              mp_drawing.DrawingSpec(color=(80,155,10), thickness = 1, circle_radius=1),
+                              mp_drawing.DrawingSpec(color=(155,80,10), thickness = 2, circle_radius=2)
+                              )    
+    mp_drawing.draw_landmarks(image, results.right_hand_landmarks, mp_holistic.HAND_CONNECTIONS,
+                              mp_drawing.DrawingSpec(color=(80,155,10), thickness = 1, circle_radius=1),
+                              mp_drawing.DrawingSpec(color=(155,80,10), thickness = 5, circle_radius=5)
+                              )    
+
+
+
 cap = cv2.VideoCapture(0)
 with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
     while cap.isOpened():
@@ -30,8 +42,8 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
 
         image, results = mediapipe_detection(frame, holistic)
         
-        draw_Landmarks(image, results)
-        
+        draw_styled_landmarks(image, results)
+
         cv2.imshow('Opencv Feed', image) #show to screen
 
         if cv2.waitKey(5) & 0xFF == ord('q'):
